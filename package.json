@@ -60,7 +60,7 @@
     "bower": "^1.8.0",
     "ember-cli-babel": "^6.7.0",
     "ember-cli-htmlbars": "^1.0.1",
-    "ember-lodash": "4.7.13",
+    "ember-lodash": "4.19.2",
     "ember-one-way-controls": "2.0.0",
     "ember-sinon": "0.6.0",
     "ember-truth-helpers": "1.2.0"
