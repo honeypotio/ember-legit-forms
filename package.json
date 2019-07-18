@@ -63,7 +63,7 @@
     "ember-lodash": "4.19.2",
     "ember-one-way-controls": "2.0.0",
     "ember-sinon": "0.6.0",
-    "ember-truth-helpers": "1.2.0"
+    "ember-truth-helpers": "2.1.0"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
