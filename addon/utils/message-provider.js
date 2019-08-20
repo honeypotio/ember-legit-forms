@@ -59,7 +59,15 @@ export default EmberObject.extend({
     if(Ember.i18n) {
       return Ember.i18n.t(`validation.${msg}`, replacements);
     }
-    let i18nService = get(this, 'container') ? get(this, 'container').lookup('service:i18n') : null;
+    const container = get(this, 'container');
+    // Check for ember-intl
+    let intlService = container ? container.lookup('service:intl') : null;
+    if (intlService) {
+      const translatedMessage = intlService.t(`validation.${msg}`, replacements);
+      if (!/Missing translation/.test(translatedMessage)) return translatedMessage;
+    }
+    // Check for ember-i18n
+    let i18nService = container ? container.lookup('service:i18n') : null;
     if (i18nService) {
       const translatedMessage = i18nService.t(`validation.${msg}`, replacements);
       if (!/Missing translation/.test(translatedMessage)) return translatedMessage;
