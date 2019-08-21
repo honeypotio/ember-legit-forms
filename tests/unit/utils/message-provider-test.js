@@ -1,7 +1,6 @@
 import { set } from '@ember/object';
 import messageProvider from 'ember-legit-forms/utils/message-provider';
 import { module, test } from 'qunit';
-import Ember from 'ember';
 
 module('Unit | Utility | message provider');
 
@@ -16,29 +15,18 @@ test('it gets validation message', function(assert) {
   assert.equal(subject.getMessage('testKey'), 'test message');
 });
 
-test('it checks first i18n before getting local keys (globals)', function(assert) {
-  Ember.i18n = {
-    t() {
-      return 'test message from i18n globals';
-    }
-  };
-
-  assert.equal(subject.getMessage('testKey'), 'test message from i18n globals');
-});
-
-test('it checks first i18n before getting local keys (globals)', function(assert) {
-  Ember.i18n = null;
+test('it checks first intl before getting local keys (globals)', function(assert) {
   set(subject, 'container', {
     lookup() {
       return {
         t() {
-          return 'test message from i18n service';
+          return 'test message from intl service';
         }
       };
     }
   });
 
-  assert.equal(subject.getMessage('testKey'), 'test message from i18n service');
+  assert.equal(subject.getMessage('testKey'), 'test message from intl service');
 });
 
 test('it can interpolate messages with and w/o replacements', function(assert) {
@@ -50,7 +38,7 @@ test('it can interpolate messages with and w/o replacements', function(assert) {
   assert.equal(message, 'test message foo and bar');
 });
 
-test('when i18n installed but key not defined it uses default translation', function(assert) {
+test('when intl installed but key not defined it uses default translation', function(assert) {
   set(subject, 'container', {
     lookup() {
       return {

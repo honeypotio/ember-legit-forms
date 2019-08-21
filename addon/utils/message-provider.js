@@ -1,10 +1,9 @@
 import EmberObject, { get } from '@ember/object';
-import Ember from 'ember';
 
 export default EmberObject.extend({
   container: null,
   /**
-   * A dictionary of default messages - can be overriden by i18n
+   * A dictionary of default messages - can be overriden by intl
    * @param defaultMessages
    * @type {Object}
    */
@@ -32,7 +31,7 @@ export default EmberObject.extend({
    * Gets a validation message based on string returned uses _fetchMessage under the hood.
    *
    * @param {string|Object} if message is a string it is looked up in
-   *  defaultMessages/i18n. If it's an object it should contain keys message
+   *  defaultMessages/intl. If it's an object it should contain keys message
    *  and replacements. All occurences of replacements in message will be then
    *  replaced according to the replacements hash.
    * @returns {string}
@@ -48,20 +47,17 @@ export default EmberObject.extend({
   /**
    * This is a convenience function that fetches the message based on a key.
    *
-   * It checks ember-i18n first and if it doesn't exist it returns a default message.
-   * If ember-i18n is installed but does not define the key, it'll use the default one.
+   * It checks ember-intl first and if it doesn't exist it returns a default message.
+   * If ember-intl is installed but does not define the key, it'll use the default one.
    * @param {string} msg: a key
    * @param {Object} replacements: replacements for interpolation
    * @returns {string}
    * @private
    */
   _fetchMessage(msg, replacements = {}) {
-    if(Ember.i18n) {
-      return Ember.i18n.t(`validation.${msg}`, replacements);
-    }
-    let i18nService = get(this, 'container') ? get(this, 'container').lookup('service:i18n') : null;
-    if (i18nService) {
-      const translatedMessage = i18nService.t(`validation.${msg}`, replacements);
+    let intlService = get(this, 'container') ? get(this, 'container').lookup('service:intl') : null;
+    if (intlService) {
+      const translatedMessage = intlService.t(`validation.${msg}`, replacements);
       if (!/Missing translation/.test(translatedMessage)) return translatedMessage;
     }
     return this._interpolateMessage(msg, replacements);
